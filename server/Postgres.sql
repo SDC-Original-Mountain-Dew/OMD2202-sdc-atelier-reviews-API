@@ -40,8 +40,7 @@ DROP TABLE IF EXISTS Characteristics;
 CREATE TABLE Characteristics (
   id SERIAL UNIQUE NOT NULL,
   product_id INTEGER NOT NULL,
-  review_id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(12) NOT NULL,
   value INTEGER NOT NULL,
   PRIMARY KEY (id)
 );
@@ -68,6 +67,11 @@ CREATE TABLE CharacteristicsReviews (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE Chars (
+  id SERIAL NOT NULL,
+  product_id INTEGER NOT NULL,
+  name VARCHAR(12) NOT NULL
+);
 
 
 
