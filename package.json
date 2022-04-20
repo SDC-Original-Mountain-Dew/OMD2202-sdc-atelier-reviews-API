@@ -1,0 +1,19 @@
+{
+  "name": "reviews-api",
+  "version": "1.0.0",
+  "description": "API for Project Atelier ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Original-Mountain-Dew/OMD2202-sdc-atelier-reviews-API.git"
+  },
+  "author": "Alex Shiao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Original-Mountain-Dew/OMD2202-sdc-atelier-reviews-API/issues"
+  },
+  "homepage": "https://github.com/SDC-Original-Mountain-Dew/OMD2202-sdc-atelier-reviews-API#readme"
+}
