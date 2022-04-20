@@ -15,18 +15,19 @@
 DROP TABLE IF EXISTS Reviews;
 
 CREATE TABLE Reviews (
+  id SERIAL UNIQUE NOT NULL,
   product_id INTEGER NOT NULL,
-  review_id SERIAL UNIQUE NOT NULL,
   rating INTEGER NOT NULL,
-  summary VARCHAR(60) NULL,
+  date VARCHAR(32) NOT NULL,
+  summary VARCHAR(128) NULL,
+  body VARCHAR(1000) NOT NULL,
   recommend BOOLEAN NOT NULL,
   reported BOOLEAN NOT NULL,
+  reviewer_name VARCHAR(255) NOT NULL,
+  reviewer_email VARCHAR(255) NOT NULL,
   response VARCHAR(1000) NOT NULL,
-  body VARCHAR(1000) NOT NULL,
-  date TIMESTAMP NOT NULL,
-  reviewer_name TEXT NOT NULL,
   helpfulness INTEGER NOT NULL,
-  PRIMARY KEY (product_id, review_id)
+  PRIMARY KEY (product_id, id)
 );
 
 -- ---
@@ -39,7 +40,7 @@ DROP TABLE IF EXISTS Characteristics;
 CREATE TABLE Characteristics (
   id SERIAL UNIQUE NOT NULL,
   product_id INTEGER NOT NULL,
-  name TEXT NOT NULL,
+  name VARCHAR(255) NOT NULL,
   value INTEGER NOT NULL,
   review_id INTEGER NOT NULL,
   PRIMARY KEY (id)
@@ -53,18 +54,33 @@ CREATE TABLE Characteristics (
 DROP TABLE IF EXISTS Photos;
 
 CREATE TABLE Photos (
-  review_id INTEGER NOT NULL,
   id SERIAL NOT NULL,
+  review_id INTEGER NOT NULL,
   url TEXT NOT NULL,
   PRIMARY KEY (id)
 );
+
+CREATE TABLE CharacteristicsReviews (
+  id SERIAL NOT NULL,
+  characteristic_id INTEGER NOT NULL,
+  review_id INTEGER NOT NULL,
+  value INTEGER NOT NULL,
+  PRIMARY KEY (id)
+);
+
+
+
+
 
 -- ---
 -- Foreign Keys
 -- ---
 
-ALTER TABLE Characteristics ADD FOREIGN KEY (review_id) REFERENCES Reviews (review_id);
-ALTER TABLE Photos ADD FOREIGN KEY (review_id) REFERENCES Reviews (review_id);
+ALTER TABLE Characteristics ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
+ALTER TABLE Photos ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
+ALTER TABLE CharacteristicsReviews ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
+ALTER TABLE CharacteristicsReviews ADD FOREIGN KEY (characteristic_id) REFERENCES Chars (id);
+
 
 -- ---
 -- Table Properties

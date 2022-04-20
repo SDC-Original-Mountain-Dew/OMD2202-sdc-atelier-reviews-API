@@ -30,5 +30,3 @@ let characteristicsSchema = mongoose.Schema({
 });
 
 let Characteristics = mongoose.model('Characteristics', characteristicsSchema);
-
-module.exports.save = save;
