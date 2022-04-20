@@ -4,7 +4,10 @@
   "description": "API for Project Atelier ",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "nodemon server/index.js",
+    "build-DB": "psql -f server/Postgres.sql -U postgres",
+    "seed-DN": "psql -f server/postgresSeed.sql -U postgres"
   },
   "repository": {
     "type": "git",
@@ -18,6 +21,7 @@
   "homepage": "https://github.com/SDC-Original-Mountain-Dew/OMD2202-sdc-atelier-reviews-API#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "pg": "^8.7.3"
   }
