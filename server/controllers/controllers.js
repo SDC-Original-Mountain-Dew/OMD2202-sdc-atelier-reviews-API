@@ -1,5 +1,9 @@
+const db = require('../models/models');
+
 function getReviews(req, res) {
-  res.send('reviews');
+  db.getReviews()
+  .then((data) => res.send(data.rows))
+  .catch((error) => console.log(error));
 }
 function getMeta(req, res) {
   res.send('meta');
