@@ -1,5 +1,6 @@
 const db = require('../models/models');
 
+
 function getReviews(req, res) {
   db.getReviews()
   .then((data) => res.send(data.rows))

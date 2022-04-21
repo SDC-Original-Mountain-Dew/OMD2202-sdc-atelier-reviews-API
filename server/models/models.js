@@ -12,7 +12,9 @@ const pool = new Pool({
 
 function getReviews() {
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM reviews LIMIT 10', (error, data) => {
+    pool.query(`SELECT reviews.*, COALESCE(photourl.photos, '[]') photos FROM (SELECT * FROM reviews WHERE product_id = 4) reviews
+    LEFT JOIN (SELECT review_id, JSON_AGG(JSON_BUILD_OBJECT('url', url, 'id', id)) photos FROM photos GROUP BY review_id) photourl
+    ON reviews.id = photourl.review_id LIMIT 5;`, (error, data) => {
       if (error) {
         return reject(error)
       } else {

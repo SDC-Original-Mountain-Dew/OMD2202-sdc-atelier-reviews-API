@@ -30,6 +30,14 @@ CREATE TABLE Reviews (
   PRIMARY KEY (product_id, id)
 );
 
+DROP TABLE IF EXISTS Photos;
+
+CREATE TABLE Photos (
+  id SERIAL NOT NULL,
+  review_id INTEGER NOT NULL,
+  url TEXT NOT NULL,
+  PRIMARY KEY (id)
+);
 -- ---
 -- Table Characteristics
 --
@@ -50,14 +58,6 @@ CREATE TABLE Characteristics (
 --
 -- ---
 
-DROP TABLE IF EXISTS Photos;
-
-CREATE TABLE Photos (
-  id SERIAL NOT NULL,
-  review_id INTEGER NOT NULL,
-  url TEXT NOT NULL,
-  PRIMARY KEY (id)
-);
 
 CREATE TABLE CharacteristicsReviews (
   id SERIAL NOT NULL,
