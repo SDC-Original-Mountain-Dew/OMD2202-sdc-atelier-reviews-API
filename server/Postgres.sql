@@ -27,7 +27,7 @@ CREATE TABLE Reviews (
   reviewer_email VARCHAR(255) NOT NULL,
   response VARCHAR(1000) NOT NULL,
   helpfulness INTEGER NOT NULL,
-  PRIMARY KEY (product_id, id)
+  PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS Photos;
@@ -70,7 +70,8 @@ CREATE TABLE CharacteristicsReviews (
 CREATE TABLE Chars (
   id SERIAL NOT NULL,
   product_id INTEGER NOT NULL,
-  name VARCHAR(12) NOT NULL
+  name VARCHAR(12) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 
@@ -80,11 +81,11 @@ CREATE TABLE Chars (
 -- Foreign Keys
 -- ---
 
-ALTER TABLE Characteristics ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
 ALTER TABLE Photos ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
 ALTER TABLE CharacteristicsReviews ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
 ALTER TABLE CharacteristicsReviews ADD FOREIGN KEY (characteristic_id) REFERENCES Chars (id);
-
+CREATE INDEX reviews_prod_idx ON reviews(product_id);
+CREATE INDEX characteristics_prod_idx ON Characteristics(product_id);
 
 -- ---
 -- Table Properties
