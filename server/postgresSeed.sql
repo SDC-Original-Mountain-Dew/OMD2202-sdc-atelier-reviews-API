@@ -9,8 +9,8 @@
 \copy CharacteristicsReviews FROM './characteristic_reviews.csv' WITH (FORMAT CSV, HEADER);
 
 
-INSERT INTO Characteristics (id, product_id, name, value)
-SELECT CharacteristicsReviews.id, Chars.product_id, Chars.name, CharacteristicsReviews.value
+INSERT INTO Characteristics (id, product_id, characteristic_id, name, value)
+SELECT CharacteristicsReviews.id, Chars.product_id, CharacteristicsReviews.characteristic_id, Chars.name, CharacteristicsReviews.value
 FROM Chars INNER JOIN CharacteristicsReviews
 ON Chars.id = CharacteristicsReviews.characteristic_id
 ORDER BY CharacteristicsReviews.characteristic_id;

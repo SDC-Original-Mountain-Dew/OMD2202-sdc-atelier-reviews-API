@@ -7,7 +7,9 @@ function getReviews(req, res) {
   .catch((error) => console.log(error));
 }
 function getMeta(req, res) {
-  res.send('meta');
+  db.getMeta()
+  .then((data) => res.send(data.rows[0].json_build_object))
+  .catch((error) => console.log(error));
 }
 function postReview(req, res) {
   res.status(201).send();
