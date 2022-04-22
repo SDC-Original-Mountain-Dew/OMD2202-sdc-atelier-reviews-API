@@ -30,6 +30,23 @@ CREATE TABLE Reviews (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE reviews2 (
+  id SERIAL UNIQUE NOT NULL,
+  product_id INTEGER NOT NULL,
+  rating INTEGER NOT NULL,
+  date VARCHAR(32) NOT NULL,
+  summary VARCHAR(128) NULL,
+  body VARCHAR(1000) NOT NULL,
+  recommend BOOLEAN NOT NULL,
+  reported BOOLEAN NOT NULL,
+  reviewer_name VARCHAR(255) NOT NULL,
+  reviewer_email VARCHAR(255) NOT NULL,
+  response VARCHAR(1000) NOT NULL,
+  helpfulness INTEGER NOT NULL,
+  photos JSON DEFAULT '[]',
+  PRIMARY KEY (id)
+);
+
 DROP TABLE IF EXISTS Photos;
 
 CREATE TABLE Photos (

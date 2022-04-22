@@ -14,3 +14,8 @@ SELECT CharacteristicsReviews.id, Chars.product_id, Chars.name, CharacteristicsR
 FROM Chars INNER JOIN CharacteristicsReviews
 ON Chars.id = CharacteristicsReviews.characteristic_id
 ORDER BY CharacteristicsReviews.characteristic_id;
+
+INSERT INTO reviews2
+SELECT reviews.*, COALESCE(photourl.photos, '[]') photos FROM reviews
+LEFT JOIN (SELECT review_id, JSON_AGG(JSON_BUILD_OBJECT('url', url)) photos FROM photos GROUP BY review_id) photourl
+ON photourl.review_id = reviews.id;
