@@ -98,10 +98,29 @@ function postReview(reqBody) {
     })
   })
 }
-function putHelpful() {
-
+function putHelpful(id) {
+  return new Promise((resolve, reject) => {
+    pool.query(`UPDATE reviews2 SET helpfulness = helpfulness + 1 WHERE id = ${id}`
+    , (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  })
 }
-function putReport() {
+function putReport(id) {
+  return new Promise((resolve, reject) => {
+    pool.query(`UPDATE reviews2 SET reported = true WHERE id = ${id}`
+    , (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  })
 }
 
 module.exports = {
