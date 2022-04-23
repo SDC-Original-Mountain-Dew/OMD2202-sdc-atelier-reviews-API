@@ -13,7 +13,7 @@ const pool = new Pool({
 function getReviews(id, page = 1, count = 5) {
   return new Promise((resolve, reject) => {
     pool.query(`
-    SELECT id AS review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, photos
+    SELECT id AS review_id, rating, summary, recommend, response, body, date, reviewer_name, photos
     FROM reviews2
     WHERE product_id = ${id} AND reported = false
     LIMIT ${count}`
