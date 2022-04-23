@@ -33,7 +33,7 @@ function getMeta(id) {
     WITH reviews AS
       (SELECT recommend, rating FROM reviews2 WHERE product_id = 20)
     SELECT JSON_BUILD_OBJECT('ratings', meta.ratings, 'recommended', meta.recommend, 'characteristics', meta.agg_chars) FROM
-    (
+      (
       SELECT * FROM
         (SELECT JSON_OBJECT_AGG(recommend_count.recommend, recommend_count.count) recommend, row_number() OVER() FROM
           (SELECT recommend, COUNT(*) FROM reviews GROUP BY recommend) recommend_count
@@ -83,7 +83,7 @@ function postReview(reqBody) {
     )
     INSERT INTO reviews2
     (product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness, photos)
-    VALUES($1, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24)
+    VALUES($1, $14, $15, $16, $17, $18, $19, $${id}, $21, $22, $23, $24)
     `
     , [product_id, Length.id, Length.value,
       Comfort.id, Comfort.value,
