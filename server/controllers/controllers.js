@@ -2,23 +2,43 @@ const db = require('../models/models');
 
 
 function getReviews(req, res) {
-  db.getReviews()
-  .then((data) => res.send(data.rows))
+  const { product_id, page, count } = req.query;
+  db.getReviews(product_id, page, count)
+  .then((data) => {
+    let result = {
+      product: product_id,
+      page,
+      count,
+      results: data.rows
+    };
+    res.send(result);
+  })
   .catch((error) => console.log(error));
 }
 function getMeta(req, res) {
-  db.getMeta()
-  .then((data) => res.send(data.rows[0].json_build_object))
+  db.getMeta(req.query.product_id)
+  .then((data) => {
+    let result = data.rows[0].json_build_object;
+    result.product_id = req.query.product_id;
+    res.send(result);
+  })
   .catch((error) => console.log(error));
 }
 function postReview(req, res) {
-  res.status(201).send();
+  db.postReview(req.body)
+  .then(() => res.status(201).send())
+  .catch((error) => console.log(error));
+
 }
 function putHelpful(req, res) {
-  res.status(204).send();
+  db.putHelpful(req.params.review_id)
+  .then(() => res.status(204).send())
+  .catch((error) => console.log(error));
 }
 function putReport(req, res) {
-  res.status(204).send();
+  db.putReport(req.params.review_id)
+  .then(() => res.status(204).send())
+  .catch((error) => console.log(error));
 }
 
 module.exports = {

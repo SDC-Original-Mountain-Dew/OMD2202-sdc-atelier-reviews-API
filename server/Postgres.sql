@@ -18,7 +18,7 @@ CREATE TABLE Reviews (
   id SERIAL UNIQUE NOT NULL,
   product_id INTEGER NOT NULL,
   rating INTEGER NOT NULL,
-  date VARCHAR(32) NOT NULL,
+  date BIGINT NOT NULL,
   summary VARCHAR(128) NULL,
   body VARCHAR(1000) NOT NULL,
   recommend BOOLEAN NOT NULL,
@@ -30,6 +30,7 @@ CREATE TABLE Reviews (
   PRIMARY KEY (id)
 );
 
+alter table reviews alter column date type timestamp without time zone using to_timestamp(date) AT TIME ZONE ‘UTC’;
 
 DROP TABLE IF EXISTS Photos;
 
@@ -47,7 +48,7 @@ CREATE TABLE Photos (
 DROP TABLE IF EXISTS Characteristics;
 
 CREATE TABLE Characteristics (
-  id SERIAL UNIQUE NOT NULL,
+  id SERIAL UNIQUE,
   product_id INTEGER NOT NULL,
   characteristic_id INTEGER NOT NULL,
   name VARCHAR(12) NOT NULL,
@@ -62,7 +63,7 @@ CREATE TABLE Characteristics (
 
 
 CREATE TABLE CharacteristicsReviews (
-  id SERIAL NOT NULL,
+  id SERIAL,
   characteristic_id INTEGER NOT NULL,
   review_id INTEGER NOT NULL,
   value INTEGER NOT NULL,
@@ -70,17 +71,17 @@ CREATE TABLE CharacteristicsReviews (
 );
 
 CREATE TABLE Chars (
-  id SERIAL NOT NULL,
+  id SERIAL,
   product_id INTEGER NOT NULL,
   name VARCHAR(12) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE reviews2 (
-  id SERIAL UNIQUE NOT NULL,
+  id SERIAL UNIQUE,
   product_id INTEGER NOT NULL,
   rating INTEGER NOT NULL,
-  date VARCHAR(32) NOT NULL,
+  date BIGINT NOT NULL,
   summary VARCHAR(128) NULL,
   body VARCHAR(1000) NOT NULL,
   recommend BOOLEAN NOT NULL,
