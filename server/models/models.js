@@ -10,13 +10,14 @@ const pool = new Pool({
   port: '5432'
 });
 
-function getReviews(id, page = 1, count = 5) {
+function getReviews(id, page, count, sort) {
   return new Promise((resolve, reject) => {
     pool.query(`
     SELECT id AS review_id, rating, summary, recommend, response, body, date, reviewer_name, photos
     FROM reviews2
     WHERE product_id = ${id} AND reported = false
-    LIMIT ${count}`
+    ORDER BY ${sort} DESC
+    LIMIT ${count};`
     , (error, data) => {
       if (error) {
         reject(error)
@@ -29,26 +30,29 @@ function getReviews(id, page = 1, count = 5) {
 function getMeta(id) {
   return new Promise((resolve, reject) => {
     pool.query(`
-    SELECT JSON_BUILD_OBJECT('ratings', meta.ratings, 'recommended', meta.recommend, 'characteristics', meta.characteristics) FROM
+    WITH reviews AS
+      (SELECT recommend, rating FROM reviews2 WHERE product_id = 20)
+    SELECT JSON_BUILD_OBJECT('ratings', meta.ratings, 'recommended', meta.recommend, 'characteristics', meta.agg_chars) FROM
     (
       SELECT * FROM
         (SELECT JSON_OBJECT_AGG(recommend_count.recommend, recommend_count.count) recommend, row_number() OVER() FROM
-          (SELECT recommend, COUNT(*) FROM reviews2 WHERE product_id=${id} GROUP BY recommend) recommend_count
+          (SELECT recommend, COUNT(*) FROM reviews GROUP BY recommend) recommend_count
         ) recommend_obj
       INNER JOIN
         (SELECT JSON_OBJECT_AGG(rating_counts.rating, rating_counts.count) ratings, row_number() OVER() FROM
-          (SELECT rating, COUNT(*) FROM reviews2 WHERE product_id=${id} GROUP BY rating) rating_counts
+          (SELECT rating, COUNT(*) FROM reviews GROUP BY rating) rating_counts
         ) rating_obj
       ON recommend_obj.row_number = rating_obj.row_number
       INNER JOIN
         (
-        SELECT JSON_OBJECT_AGG(chars.name, chars.average) AS characteristics, row_number() OVER() FROM
+        SELECT JSON_OBJECT_AGG(chars.name, chars.average) AS agg_chars, row_number() OVER() FROM
           (SELECT averages.name, JSON_BUILD_OBJECT('id', averages.characteristic_id, 'value', averages.value) average FROM
-            (SELECT name, AVG(value) AS value, characteristic_id FROM characteristics WHERE product_id=${id} GROUP BY characteristic_id, name) averages
+            (SELECT name, AVG(value) AS value, characteristic_id FROM characteristics WHERE product_id=20 GROUP BY characteristic_id, name) averages
           ) chars
         ) char_obj
       ON recommend_obj.row_number = char_obj.row_number
-    ) meta;`, (error, data) => {
+    ) meta;`
+    , (error, data) => {
         if (error) {
           reject(error)
         } else {

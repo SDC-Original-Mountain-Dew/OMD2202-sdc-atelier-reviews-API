@@ -2,8 +2,11 @@ const db = require('../models/models');
 
 
 function getReviews(req, res) {
-  const { product_id, page = 1, count = 5 } = req.query;
-  db.getReviews(product_id, page, count)
+  let { product_id, page = 1, count = 5, sort = 'relevant' } = req.query;
+  if (sort === 'relevant') {
+    sort = 'helpfulness DESC, date'
+  }
+  db.getReviews(product_id, page, count, sort)
   .then((data) => {
     let result = {
       product: product_id,
