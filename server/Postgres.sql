@@ -52,7 +52,7 @@ CREATE TABLE Characteristics (
   product_id INTEGER NOT NULL,
   characteristic_id INTEGER NOT NULL,
   name VARCHAR(12) NOT NULL,
-  value INTEGER NOT NULL,
+  value INTEGER,
   PRIMARY KEY (id)
 );
 

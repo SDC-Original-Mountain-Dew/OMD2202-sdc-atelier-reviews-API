@@ -31,7 +31,7 @@ function getMeta(id) {
   return new Promise((resolve, reject) => {
     pool.query(`
     WITH reviews AS
-      (SELECT recommend, rating FROM reviews2 WHERE product_id = 20)
+      (SELECT recommend, rating FROM reviews2 WHERE product_id = ${id})
     SELECT JSON_BUILD_OBJECT('ratings', meta.ratings, 'recommended', meta.recommend, 'characteristics', meta.agg_chars) FROM
       (
       SELECT * FROM
@@ -47,7 +47,7 @@ function getMeta(id) {
         (
         SELECT JSON_OBJECT_AGG(chars.name, chars.average) AS agg_chars, row_number() OVER() FROM
           (SELECT averages.name, JSON_BUILD_OBJECT('id', averages.characteristic_id, 'value', averages.value) average FROM
-            (SELECT name, AVG(value) AS value, characteristic_id FROM characteristics WHERE product_id=20 GROUP BY characteristic_id, name) averages
+            (SELECT characteristic_id, name, AVG(value) AS value FROM characteristics WHERE product_id=${id} GROUP BY characteristic_id, name) averages
           ) chars
         ) char_obj
       ON recommend_obj.row_number = char_obj.row_number

@@ -8,12 +8,16 @@
 
 \copy CharacteristicsReviews FROM './characteristic_reviews.csv' WITH (FORMAT CSV, HEADER);
 
-
 INSERT INTO Characteristics (product_id, characteristic_id, name, value)
-SELECT Chars.product_id, CharacteristicsReviews.characteristic_id, Chars.name, CharacteristicsReviews.value
-FROM Chars INNER JOIN CharacteristicsReviews
-ON Chars.id = CharacteristicsReviews.characteristic_id
-ORDER BY CharacteristicsReviews.characteristic_id;
+SELECT Chars.product_id, filled_chars.characteristic_id, Chars.name, filled_chars.value
+FROM Chars INNER JOIN
+( SELECT * FROM CharacteristicsReviews
+  RIGHT JOIN (SELECT * FROM generate_series(1,3347679) characteristic_id) series
+  USING (characteristic_id)
+  ORDER BY characteristic_id ASC
+) filled_chars
+ON Chars.id = filled_chars.characteristic_id
+ORDER BY filled_chars.characteristic_id;
 
 INSERT INTO reviews2 (product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness, photos)
 SELECT reviews.product_id, reviews.rating, reviews.date, reviews.summary, reviews.body, reviews.recommend, reviews.reported, reviews.reviewer_name,
