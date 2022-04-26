@@ -109,3 +109,5 @@ reviews_photos.csv
 reviews.csv
 package-lock.json
 querys.sql
+server/__tests__/
+server/k6/

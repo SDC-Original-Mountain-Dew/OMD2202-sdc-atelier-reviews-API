@@ -9,8 +9,8 @@
 -- Table Review
 --
 -- ---
--- DROP DATABASE IF EXISTS SDC;
--- CREATE DATABASE SDC;
+DROP DATABASE IF EXISTS SDC;
+CREATE DATABASE SDC;
 \c sdc;
 DROP TABLE IF EXISTS Reviews;
 
@@ -29,8 +29,6 @@ CREATE TABLE Reviews (
   helpfulness INTEGER NOT NULL,
   PRIMARY KEY (id)
 );
-
-alter table reviews alter column date type timestamp without time zone using to_timestamp(date) AT TIME ZONE ‘UTC’;
 
 DROP TABLE IF EXISTS Photos;
 
@@ -102,9 +100,6 @@ CREATE TABLE reviews2 (
 ALTER TABLE Photos ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
 ALTER TABLE CharacteristicsReviews ADD FOREIGN KEY (review_id) REFERENCES Reviews (id);
 ALTER TABLE CharacteristicsReviews ADD FOREIGN KEY (characteristic_id) REFERENCES Chars (id);
-CREATE INDEX reviews_prod_idx ON reviews(product_id);
-CREATE INDEX characteristics_prod_idx ON Characteristics(product_id);
-
 -- ---
 -- Table Properties
 -- ---
