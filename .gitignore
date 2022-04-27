@@ -112,3 +112,4 @@ querys.sql
 server/__tests__/
 server/k6/
 forthesdc123.pem
+seed.sql
