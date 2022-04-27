@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 
 const pool = new Pool({
   user: `${process.env.DB_USER || 'postgres'}`,
-  host: `${process.env.DB_HOST || 'localhost'}`,
+  host: `${process.env.DB_HOST || '184.169.206.75'}`,
   database: `${process.env.DB_NAME || 'sdc'}`,
   password: `${process.env.DB_PASSWORD || 'hellO12#'}`,
   port: `${process.env.DB_PORT || 5432}`
