@@ -28,7 +28,7 @@ Retrieve a list of products
 | product_id| Integer | Specify the product you want reviews for. Required
 | page      | Integer | Selects the page of results to return. Default 1.         |
 | count     | Integer | Specifies how many results to return. Default 5.|
-
+| sort     | String | Specifies how to sort the reviews from "helpfulness", "relevant", "date"|
 #### Response
 ```json
 {
@@ -99,4 +99,78 @@ Retrieve a list of products
         }
     ]
 }
+```
+### `GET /reviews/meta`
+Retrieve a list of meta data for the product
+
+#### Parameters
+| Parameter | Type    | Description                                               |
+|-----------|---------|-----------------------------------------------------------|
+| product_id| Integer | Specify the product you want reviews for. Required
+
+
+#### Response
+```json
+{
+    "ratings": {
+        "2": 1,
+        "3": 5,
+        "4": 1
+    },
+    "recommended": {
+        "true": 7
+    },
+    "characteristics": {
+        "Quality": {
+            "id": 79,
+            "value": 5
+        }
+    },
+    "product_id": "22"
+}
+```
+### `POST /reviews`
+Post a new review to the API
+
+#### Parameters
+| Parameter | Type    | Description                                               |
+|-----------|---------|-----------------------------------------------------------|
+| product_id| Integer | Specify the product you want to post reviews for. Required |
+| rating| Integer | Integer indicating the review rating. Required |
+| summary| text | Summary of the review. Required |
+| body| text | The full text of the review. Required |
+| recommend| bool | True or false, depending on if you recommend it or not. Required |
+| name| text | Username for question asker. Required |
+| email| text | Email address for question asker. Required |
+| photos| [text] | Array of photo urls to images uploaded. |
+| characteristics| object | Object of keys representing characteristic_id with corresponding values from 1-5. Required |
+
+
+
+#### Response
+```201 status code
+```
+### `PUT /reviews/:review_id/helpful`
+Mark a review as helpful
+
+#### Parameters
+| Parameter | Type    | Description                                               |
+|-----------|---------|-----------------------------------------------------------|
+| review_id| Integer | ID of the review to update. Required
+
+
+#### Response
+```204 status code
+```
+### `PUT /reviews/:review_id/report`
+Report a review
+
+#### Parameters
+| Parameter | Type    | Description                                               |
+|-----------|---------|-----------------------------------------------------------|
+| review_id| Integer | ID of the review to update. Required
+
+
+#### Response
+```204 status code
 ```
