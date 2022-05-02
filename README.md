@@ -148,7 +148,8 @@ Post a new review to the API
 
 
 #### Response
-```201 status code
+```
+201 status code
 ```
 ### `PUT /reviews/:review_id/helpful`
 Mark a review as helpful
@@ -160,7 +161,8 @@ Mark a review as helpful
 
 
 #### Response
-```204 status code
+```
+204 status code
 ```
 ### `PUT /reviews/:review_id/report`
 Report a review
@@ -172,5 +174,6 @@ Report a review
 
 
 #### Response
-```204 status code
+```
+204 status code
 ```
