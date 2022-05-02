@@ -114,3 +114,4 @@ server/k6/
 forthesdc123.pem
 seed.sql
 genesSeed.sql
+newrelic.js
